@@ -1,32 +1,51 @@
-# React + TypeScript + Vite
+# Baquera-SumIt Take Home Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React + TypeScript register page built for the SumIt take-home exercise. It recreates a ledger-style transaction register with composable search filters, an AG Grid data table, and multi-row tagging.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Composable filters** — Search and filter transactions by field (account, date, amount, tags, and more) with contextual suggestion counts
+- **Custom date picking** — Relative and custom date range filters
+- **AG Grid register** — Sortable, groupable transaction grid with account grouping and custom cell renderers
+- **Multi-row tagging** — Select rows and apply tags in bulk via a tag dialog
+- **Selection-aware toolbar** — Actions update based on the number of selected transactions
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19 + TypeScript
+- Vite
+- Tailwind CSS 4
+- AG Grid Community & Enterprise
+- date-fns
 
-## Expanding the Oxlint configuration
+## Getting Started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Run Oxlint |
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── filters/     # Composable search and filter chips
+│   ├── grid/        # AG Grid table, cell renderers, tagging dialog
+│   ├── navigation/  # Sidebar and ledger tabs
+│   └── ui/          # Shared UI primitives
+├── data/            # Mock transaction data and generator
+├── layouts/         # App shell and page layout
+└── lib/             # Filter/search logic
+```
