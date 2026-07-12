@@ -303,21 +303,30 @@ export function RegisterSearch({
       <div className="flex items-center gap-3">
         <div className="relative min-w-0 flex-1">
           {showStartHint && hintReady && (
-            <div className="search-hint-tooltip-enter absolute bottom-full left-0 z-[60] mb-2.5">
-              <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3 text-white shadow-lg">
+            <div className="search-hint-tooltip-enter absolute bottom-full left-0 z-[60] mb-2.5 w-full max-w-xl">
+              <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3.5 text-white shadow-lg">
                 <span
                   aria-hidden
                   className="absolute -bottom-1.5 left-7 h-3 w-3 rotate-45 border-r border-b border-primary/20 bg-primary"
                 />
-                <div className="flex items-center gap-3">
-                  <span className="rounded bg-white/20 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider">
-                    Demo
-                  </span>
-                  <span className="text-base font-semibold">Start here</span>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 space-y-2">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-white/90">
+                      Demo — Try the scenario
+                    </p>
+                    <p className="text-sm leading-snug text-white/95">
+                      &ldquo;How much did Real Estate Holdings spend on general liability premiums last
+                      quarter?&rdquo;
+                    </p>
+                    <p className="text-sm leading-snug text-white/80">
+                      Start by typing <span className="font-semibold text-white">general liability</span> in
+                      the filter bar.
+                    </p>
+                  </div>
                   <button
                     type="button"
                     onClick={dismissStartHint}
-                    className="ml-0.5 rounded p-1 text-white/80 hover:bg-white/15 hover:text-white"
+                    className="shrink-0 rounded p-1 text-white/80 hover:bg-white/15 hover:text-white"
                     aria-label="Dismiss hint"
                   >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
