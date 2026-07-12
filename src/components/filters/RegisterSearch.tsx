@@ -71,6 +71,7 @@ export function RegisterSearch({
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [showStartHint, setShowStartHint] = useState(true)
+  const [hintReady, setHintReady] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(0)
   const [composeField, setComposeField] = useState<ComposeField | null>(null)
   const [composeValue, setComposeValue] = useState('')
@@ -197,7 +198,15 @@ export function RegisterSearch({
 
   const dismissStartHint = useCallback(() => {
     setShowStartHint(false)
+    setHintReady(false)
   }, [])
+
+  useEffect(() => {
+    if (!showStartHint) return
+
+    const timer = window.setTimeout(() => setHintReady(true), 300)
+    return () => window.clearTimeout(timer)
+  }, [showStartHint])
 
   useEffect(() => {
     setHighlightIndex(0)
@@ -293,25 +302,25 @@ export function RegisterSearch({
     <div ref={containerRef}>
       <div className="flex items-center gap-3">
         <div className="relative min-w-0 flex-1">
-          {showStartHint && (
-            <div className="absolute top-full left-0 z-[60] mt-2 flex items-start gap-2">
-              <div className="relative rounded-md border border-primary/20 bg-primary px-3 py-2 text-white shadow-lg">
+          {showStartHint && hintReady && (
+            <div className="search-hint-tooltip-enter absolute bottom-full left-0 z-[60] mb-2.5">
+              <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3 text-white shadow-lg">
                 <span
                   aria-hidden
-                  className="absolute -top-1.5 left-6 h-3 w-3 rotate-45 border-t border-l border-primary/20 bg-primary"
+                  className="absolute -bottom-1.5 left-7 h-3 w-3 rotate-45 border-r border-b border-primary/20 bg-primary"
                 />
-                <div className="flex items-center gap-2">
-                  <span className="rounded bg-white/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                <div className="flex items-center gap-3">
+                  <span className="rounded bg-white/20 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider">
                     Demo
                   </span>
-                  <span className="text-sm font-medium">Start here</span>
+                  <span className="text-base font-semibold">Start here</span>
                   <button
                     type="button"
                     onClick={dismissStartHint}
-                    className="ml-1 rounded p-0.5 text-white/80 hover:bg-white/15 hover:text-white"
+                    className="ml-0.5 rounded p-1 text-white/80 hover:bg-white/15 hover:text-white"
                     aria-label="Dismiss hint"
                   >
-                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
                     </svg>
                   </button>
@@ -325,9 +334,10 @@ export function RegisterSearch({
               'flex min-h-9 items-center gap-1.5 rounded-md border bg-white px-2.5 py-1 transition-shadow',
               'focus-within:border-primary focus-within:ring-1 focus-within:ring-primary',
               open ? 'border-primary ring-1 ring-primary' : 'border-gray-300',
-              showStartHint && 'border-primary ring-2 ring-primary/40 shadow-[0_0_0_4px_rgba(26,138,138,0.12)]',
+              showStartHint && 'search-hint-bar-pulse',
             )}
             onClick={() => {
+              dismissStartHint()
               if (datePickerMode) datePickerRef.current?.focus()
               else if (isComposing) composeInputRef.current?.focus()
               else searchInputRef.current?.focus()
@@ -349,11 +359,13 @@ export function RegisterSearch({
                     type="text"
                     value={composeValue}
                     onChange={(e) => {
-                      if (e.target.value) dismissStartHint()
                       setComposeValue(e.target.value)
                       setOpen(true)
                     }}
-                    onFocus={() => setOpen(true)}
+                    onFocus={() => {
+                      dismissStartHint()
+                      setOpen(true)
+                    }}
                     onKeyDown={handleComposeKeyDown}
                     className="min-w-[2ch] border-0 bg-transparent p-0 text-xs font-medium text-primary outline-none [field-sizing:content]"
                     aria-label={`${chipLabel} value`}
@@ -366,11 +378,13 @@ export function RegisterSearch({
                 type="text"
                 value={query}
                 onChange={(e) => {
-                  if (e.target.value) dismissStartHint()
                   setQuery(e.target.value)
                   setOpen(true)
                 }}
-                onFocus={() => setOpen(true)}
+                onFocus={() => {
+                  dismissStartHint()
+                  setOpen(true)
+                }}
                 onKeyDown={handleSearchKeyDown}
                 placeholder="Filter by entity, account, date…"
                 className="min-w-[120px] flex-1 border-0 bg-transparent py-1 text-sm text-gray-800 outline-none placeholder:text-gray-400"
