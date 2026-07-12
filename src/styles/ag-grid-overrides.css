@@ -1,0 +1,156 @@
+/* SumIt Register grid — tuned to match production AG Grid styling */
+
+.sumit-grid {
+  --ag-font-family: 'Inter', system-ui, sans-serif;
+  --ag-font-size: 13px;
+  --ag-header-height: 36px;
+  --ag-row-height: 32px;
+  --ag-header-background-color: #f8f9fa;
+  --ag-header-foreground-color: #374151;
+  --ag-border-color: #e5e7eb;
+  --ag-row-border-color: #f0f0f0;
+  --ag-odd-row-background-color: #ffffff;
+  --ag-background-color: #ffffff;
+  --ag-foreground-color: #111827;
+  --ag-secondary-foreground-color: #6b7280;
+  --ag-selected-row-background-color: #e8f4fc;
+  --ag-row-hover-color: #f0f7ff;
+  --ag-range-selection-border-color: #1a8a8a;
+  --ag-checkbox-checked-color: #1a8a8a;
+  --ag-accent-color: #1a8a8a;
+  --ag-input-focus-border-color: #1a8a8a;
+  --ag-side-bar-panel-width: 240px;
+}
+
+.sumit-grid .ag-header-cell-text {
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.sumit-grid .ag-side-bar {
+  border-left: 1px solid #e5e7eb;
+}
+
+.sumit-grid .ag-side-button-button {
+  color: #6b7280;
+}
+
+.sumit-grid .ag-side-button-button.ag-selected {
+  color: #1a8a8a;
+}
+
+.sumit-grid .ag-column-drop {
+  min-height: 36px;
+  background: #fafafa;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Row group chip — greyscale, low hierarchy */
+.sumit-grid .ag-column-drop-cell {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sumit-grid .ag-column-drop-cell-button {
+  color: #9ca3af;
+}
+
+.sumit-grid .ag-cell-value.ag-right-aligned-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+.sumit-grid .ag-tool-panel-wrapper {
+  background: #ffffff;
+}
+
+.sumit-grid .ag-column-select-column-label {
+  font-size: 12px;
+}
+
+.sumit-grid .ag-pivot-mode-panel {
+  display: none;
+}
+
+/* Group header row — muted greyscale */
+.sumit-grid .ag-row-group .ag-group-value {
+  position: relative;
+  padding-left: 10px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.sumit-grid .ag-row-group .ag-group-value::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background-color: #d1d5db;
+}
+
+.sumit-grid .ag-row-group .ag-icon {
+  color: #9ca3af;
+}
+
+/* Subtotal footer — elevated visual hierarchy */
+.sumit-grid .ag-row-group-footer,
+.sumit-grid .ag-row-footer {
+  background-color: #eef2f6 !important;
+  border-top: 2px solid #cbd5e1 !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell,
+.sumit-grid .ag-row-footer .ag-cell {
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  color: #1f2937 !important;
+  background-color: #eef2f6 !important;
+  display: flex;
+  align-items: center;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell-wrapper,
+.sumit-grid .ag-row-footer .ag-cell-wrapper {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.sumit-grid .ag-row-group-footer .ag-group-value,
+.sumit-grid .ag-row-footer .ag-group-value {
+  font-weight: 500;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell-value.ag-right-aligned-cell,
+.sumit-grid .ag-row-footer .ag-cell-value.ag-right-aligned-cell {
+  font-weight: 500;
+  font-size: 13px;
+  color: #0f766e;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell[col-id='accountingAmount'],
+.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'] {
+  justify-content: flex-start !important;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell[col-id='accountingAmount'] .ag-cell-value,
+.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'] .ag-cell-value {
+  text-align: left !important;
+  width: 100%;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell:not([col-id]) .ag-group-value,
+.sumit-grid .ag-row-group-footer [col-id='ag-Grid-AutoColumn'] .ag-cell-value,
+.sumit-grid .ag-row-footer .ag-cell:not([col-id]) .ag-group-value,
+.sumit-grid .ag-row-footer [col-id='ag-Grid-AutoColumn'] .ag-cell-value {
+  font-weight: 500;
+}

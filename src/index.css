@@ -1,0 +1,39 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-sidebar: #1a4550;
+  --color-sidebar-hover: #245a68;
+  --color-sidebar-active: #2a6573;
+  --color-primary: #1a8a8a;
+  --color-primary-dark: #157575;
+  --color-primary-light: #e6f3f3;
+  --color-dev-badge: #e85d4c;
+  --color-tag-blue: #2563eb;
+  --color-tag-blue-bg: #eff6ff;
+  --color-tag-green: #16a34a;
+  --color-tag-green-bg: #f0fdf4;
+  --color-tag-gray: #6b7280;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Shared left inset for toolbar sections aligned with the grid row group panel */
+.content-gutter-x {
+  padding-left: 12px;
+  padding-right: 12px;
+}
