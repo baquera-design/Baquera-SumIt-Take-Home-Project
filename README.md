@@ -4,11 +4,9 @@ A React + TypeScript register page built for the SumIt take-home exercise. It re
 
 ## Live Demo
 
-**[Open the demo](https://baquera-design.github.io/Baquera-SumIt-Take-Home-Project/)** — no install required. Works in any modern browser.
+**[Open the demo](https://baquera-design.github.io/Baquera-SumIt-Take-Home-Project/)** 
 
-> **Pages setup:** In repo **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
-
-## For Reviewers (Product Managers)
+## For Reviewers
 
 1. Click the live demo link above
 2. That's it — no downloads, Terminal, Node.js, or IDE needed
@@ -22,43 +20,3 @@ Try adding filters in the search bar, selecting rows, and applying tags to multi
 - **AG Grid register** — Sortable, groupable transaction grid with account grouping and custom cell renderers
 - **Multi-row tagging** — Select rows and apply tags in bulk via a tag dialog
 - **Selection-aware toolbar** — Actions update based on the number of selected transactions
-
-## Tech Stack
-
-- React 19 + TypeScript
-- Vite
-- Tailwind CSS 4
-- AG Grid Community & Enterprise
-- date-fns
-
-## Getting Started (Developers)
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-## Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run Oxlint |
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── filters/     # Composable search and filter chips
-│   ├── grid/        # AG Grid table, cell renderers, tagging dialog
-│   ├── navigation/  # Sidebar and ledger tabs
-│   └── ui/          # Shared UI primitives
-├── data/            # Mock transaction data and generator
-├── layouts/         # App shell and page layout
-└── lib/             # Filter/search logic
-```
