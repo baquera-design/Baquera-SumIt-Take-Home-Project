@@ -6,6 +6,8 @@ A React + TypeScript register page built for the SumIt take-home exercise. It re
 
 **[Open the demo](https://baquera-design.github.io/Baquera-SumIt-Take-Home-Project/)** — no install required. Works in any modern browser.
 
+> **Pages setup:** In repo **Settings → Pages**, set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
+
 ## For Reviewers (Product Managers)
 
 1. Click the live demo link above
