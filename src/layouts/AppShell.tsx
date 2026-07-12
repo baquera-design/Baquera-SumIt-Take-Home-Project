@@ -83,12 +83,12 @@ function RegisterToolbar({
   onResetSelection: () => void
 }) {
   return (
-    <div className="shrink-0 bg-white">
+    <div className="shrink-0 overflow-visible bg-white">
       <div className="content-gutter-x py-2.5">
         <Breadcrumbs />
       </div>
 
-      <div className="content-gutter-x border-t border-gray-100 py-3">
+      <div className="content-gutter-x overflow-visible border-t border-gray-100 py-3">
         <RegisterSearch
           filters={filters}
           onFiltersChange={onFiltersChange}

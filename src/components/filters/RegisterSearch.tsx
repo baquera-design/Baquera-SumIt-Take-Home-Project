@@ -301,9 +301,14 @@ export function RegisterSearch({
   return (
     <div ref={containerRef}>
       <div className="flex items-center gap-3">
-        <div className="relative min-w-0 flex-1">
+        <div
+          className={clsx(
+            'relative min-w-0 flex-1',
+            showStartHint && hintReady && 'pt-[8.75rem]',
+          )}
+        >
           {showStartHint && hintReady && (
-            <div className="search-hint-tooltip-enter absolute bottom-full left-0 z-[60] mb-2.5 w-full max-w-xl">
+            <div className="search-hint-tooltip-enter absolute top-0 left-0 z-[60] w-full max-w-xl">
               <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3.5 text-white shadow-lg">
                 <span
                   aria-hidden
