@@ -77,7 +77,6 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
   ) {
   const gridRef = useRef<AgGridReact>(null)
   const hasSelectedRef = useRef(false)
-  const hadActiveFiltersRef = useRef(false)
   const [tagDialogOpen, setTagDialogOpen] = useState(false)
   const [tagTargetIds, setTagTargetIds] = useState<string[]>([])
 
@@ -282,22 +281,6 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
     [],
   )
 
-  const applyAccountGrouping = useCallback(
-    (api: GridApi) => {
-      if (filters.length > 0) {
-        api.setRowGroupColumns(['account'])
-        hadActiveFiltersRef.current = true
-      } else if (hadActiveFiltersRef.current) {
-        api.setRowGroupColumns([])
-        hadActiveFiltersRef.current = false
-      }
-
-      syncGroupedColumnLayout(api)
-      expandAccountGroups(api)
-    },
-    [filters.length],
-  )
-
   const onGridReady = (params: GridReadyEvent) => {
     if (!hasSelectedRef.current) {
       params.api.forEachNode((node) => {
@@ -319,7 +302,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
       expandAccountGroups(params.api)
     })
 
-    applyAccountGrouping(params.api)
+    syncGroupedColumnLayout(params.api)
     params.api.sizeColumnsToFit()
     notifySelectionCount()
   }
@@ -327,9 +310,8 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
   useEffect(() => {
     const api = gridRef.current?.api
     if (!api) return
-    applyAccountGrouping(api)
     api.sizeColumnsToFit()
-  }, [filters, rowData, applyAccountGrouping])
+  }, [rowData])
 
   const onSelectionChanged = useCallback(() => {
     refreshTagsColumn()
@@ -382,8 +364,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
           rowGroupPanelShow="always"
           groupDisplayType="singleColumn"
           groupTotalRow="bottom"
-          groupDefaultExpanded={filters.length > 0 ? -1 : 0}
-          isGroupOpenByDefault={(params) => filters.length > 0 || params.field === 'account'}
+          groupDefaultExpanded={0}
           sideBar={sideBar}
           animateRows
           suppressAggFuncInHeader={false}

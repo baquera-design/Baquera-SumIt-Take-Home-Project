@@ -7,6 +7,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react'
+import { createPortal } from 'react-dom'
 import clsx from 'clsx'
 import type { RegisterTransaction } from '../../data/registerData'
 import { FilterChip } from './FilterChip'
@@ -80,6 +81,12 @@ export function RegisterSearch({
   const composeInputRef = useRef<HTMLInputElement>(null)
   const datePickerRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const searchBarRef = useRef<HTMLDivElement>(null)
+  const [tooltipPosition, setTooltipPosition] = useState<{
+    left: number
+    top: number
+    width: number
+  } | null>(null)
 
   const index = useMemo(() => buildSearchIndex(transactions), [transactions])
   const isComposing = composeField != null
@@ -209,6 +216,32 @@ export function RegisterSearch({
   }, [showStartHint])
 
   useEffect(() => {
+    if (!showStartHint || !hintReady || !searchBarRef.current) {
+      setTooltipPosition(null)
+      return
+    }
+
+    const updatePosition = () => {
+      if (!searchBarRef.current) return
+      const rect = searchBarRef.current.getBoundingClientRect()
+      setTooltipPosition({
+        left: rect.left,
+        top: rect.top - 10,
+        width: Math.min(Math.max(rect.width, 320), 576),
+      })
+    }
+
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+    window.addEventListener('scroll', updatePosition, true)
+
+    return () => {
+      window.removeEventListener('resize', updatePosition)
+      window.removeEventListener('scroll', updatePosition, true)
+    }
+  }, [showStartHint, hintReady])
+
+  useEffect(() => {
     setHighlightIndex(0)
   }, [dropdownItems, composeField, composeValue, query])
 
@@ -298,52 +331,59 @@ export function RegisterSearch({
   const showDatePicker = open && datePickerMode && composeField === 'date'
   const chipLabel = composeField ? FIELD_LABELS[composeField] : ''
 
-  return (
-    <div ref={containerRef}>
-      <div className="flex items-center gap-3">
-        <div
-          className={clsx(
-            'relative min-w-0 flex-1',
-            showStartHint && hintReady && 'pt-[8.75rem]',
-          )}
-        >
-          {showStartHint && hintReady && (
-            <div className="search-hint-tooltip-enter absolute top-0 left-0 z-[60] w-full max-w-xl">
-              <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3.5 text-white shadow-lg">
-                <span
-                  aria-hidden
-                  className="absolute -bottom-1.5 left-7 h-3 w-3 rotate-45 border-r border-b border-primary/20 bg-primary"
-                />
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 space-y-2">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-white/90">
-                      Demo — Try the scenario
-                    </p>
-                    <p className="text-sm leading-snug text-white/95">
-                      &ldquo;How much did Real Estate Holdings spend on general liability premiums last
-                      quarter?&rdquo;
-                    </p>
-                    <p className="text-sm leading-snug text-white/80">
-                      Start by typing <span className="font-semibold text-white">general liability</span> in
-                      the filter bar.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={dismissStartHint}
-                    className="shrink-0 rounded p-1 text-white/80 hover:bg-white/15 hover:text-white"
-                    aria-label="Dismiss hint"
-                  >
-                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-                    </svg>
-                  </button>
+  const startHintTooltip =
+    showStartHint && hintReady && tooltipPosition
+      ? createPortal(
+          <div
+            className="search-hint-tooltip-enter pointer-events-auto fixed z-[200] -translate-y-full"
+            style={{
+              left: tooltipPosition.left,
+              top: tooltipPosition.top,
+              width: tooltipPosition.width,
+            }}
+          >
+            <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3.5 text-white shadow-lg">
+              <span
+                aria-hidden
+                className="absolute -bottom-1.5 left-7 h-3 w-3 rotate-45 border-r border-b border-primary/20 bg-primary"
+              />
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0 space-y-2">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-white/90">
+                    Demo — Try the scenario
+                  </p>
+                  <p className="text-sm leading-snug text-white/95">
+                    &ldquo;How much did Real Estate Holdings spend on general liability premiums last
+                    quarter?&rdquo;
+                  </p>
+                  <p className="text-sm leading-snug text-white/80">
+                    Start by clicking and either selecting or typing a filter to begin.
+                  </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={dismissStartHint}
+                  className="shrink-0 rounded p-1 text-white/80 hover:bg-white/15 hover:text-white"
+                  aria-label="Dismiss hint"
+                >
+                  <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+                  </svg>
+                </button>
               </div>
             </div>
-          )}
+          </div>,
+          document.body,
+        )
+      : null
 
+  return (
+    <div ref={containerRef}>
+      {startHintTooltip}
+      <div className="flex items-center gap-3">
+        <div className="relative min-w-0 flex-1">
           <div
+            ref={searchBarRef}
             className={clsx(
               'flex min-h-9 items-center gap-1.5 rounded-md border bg-white px-2.5 py-1 transition-shadow',
               'focus-within:border-primary focus-within:ring-1 focus-within:ring-primary',
