@@ -29,6 +29,34 @@ const currencyFormatter = (value: number | null | undefined) => {
   })
 }
 
+const FILTER_SUBTOTAL_ROW_ID = '__filter-subtotal__'
+
+function buildFilterSubtotalRow(
+  rows: RegisterTransaction[],
+): RegisterTransaction {
+  const totals = rows.reduce(
+    (acc, row) => ({
+      debits: acc.debits + (row.debits ?? 0),
+      credits: acc.credits + (row.credits ?? 0),
+      accountingAmount: acc.accountingAmount + (row.accountingAmount ?? 0),
+    }),
+    { debits: 0, credits: 0, accountingAmount: 0 },
+  )
+
+  return {
+    id: FILTER_SUBTOTAL_ROW_ID,
+    entity: 'Subtotal',
+    account: '',
+    effectiveAt: '',
+    accountingAmount: totals.accountingAmount,
+    description: '',
+    accountCode: '',
+    tags: [],
+    debits: totals.debits,
+    credits: totals.credits,
+  }
+}
+
 function isGroupedByAccount(api: GridApi): boolean {
   return api.getRowGroupColumns().some((col) => col.getColId() === 'account')
 }
@@ -94,6 +122,11 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
   const rowData = useMemo(
     () => applyRegisterFilters(transactions, filters),
     [transactions, filters],
+  )
+
+  const pinnedBottomRowData = useMemo(
+    () => (filters.length > 0 ? [buildFilterSubtotalRow(rowData)] : []),
+    [filters.length, rowData],
   )
 
   const handleTagItems = useCallback((transactionIds: string[]) => {
@@ -319,7 +352,13 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
   }, [refreshTagsColumn, notifySelectionCount])
 
   const isRowSelectable = useCallback(
-    (node: IRowNode) => !node.group && !node.footer,
+    (node: IRowNode) => !node.group && !node.footer && !node.rowPinned,
+    [],
+  )
+
+  const getRowClass = useCallback(
+    (params: { node: IRowNode }) =>
+      params.node.rowPinned === 'bottom' ? 'register-filter-subtotal' : '',
     [],
   )
 
@@ -349,10 +388,12 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
           ref={gridRef}
           theme={sumitTheme}
           rowData={rowData}
+          pinnedBottomRowData={pinnedBottomRowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           autoGroupColumnDef={autoGroupColumnDef}
           getRowId={getRowId}
+          getRowClass={getRowClass}
           isRowSelectable={isRowSelectable}
           rowSelection={{
             mode: 'multiRow',
