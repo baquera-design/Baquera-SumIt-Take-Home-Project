@@ -121,6 +121,8 @@
 .sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='credits'],
 .sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
   color: #0f766e !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell-wrapper,

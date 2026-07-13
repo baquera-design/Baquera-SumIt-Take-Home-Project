@@ -38,34 +38,30 @@ function isFilterSubtotalNode(node: IRowNode) {
 
 function subtotalCellStyle(params: CellClassParams, numeric = false) {
   if (!isFilterSubtotalNode(params.node)) return undefined
-  return numeric
-    ? { fontWeight: '600', color: '#0f766e' }
-    : { fontWeight: '600', color: '#1f2937' }
+  return {
+    fontWeight: '600',
+    color: numeric ? '#0f766e' : '#1f2937',
+    textAlign: 'left',
+    justifyContent: 'flex-start',
+  }
 }
 
 function buildFilterSubtotalRow(
   rows: RegisterTransaction[],
 ): RegisterTransaction {
-  const totals = rows.reduce(
-    (acc, row) => ({
-      debits: acc.debits + (row.debits ?? 0),
-      credits: acc.credits + (row.credits ?? 0),
-      accountingAmount: acc.accountingAmount + (row.accountingAmount ?? 0),
-    }),
-    { debits: 0, credits: 0, accountingAmount: 0 },
-  )
+  const netAmount = rows.reduce((sum, row) => sum + row.accountingAmount, 0)
 
   return {
     id: FILTER_SUBTOTAL_ROW_ID,
     entity: 'Subtotal',
     account: '',
     effectiveAt: '',
-    accountingAmount: totals.accountingAmount,
+    accountingAmount: netAmount,
     description: '',
     accountCode: '',
     tags: [],
-    debits: totals.debits,
-    credits: totals.credits,
+    debits: netAmount,
+    credits: null,
   }
 }
 
@@ -217,7 +213,8 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
         aggFunc: 'sum',
         type: 'numericColumn',
         minWidth: 110,
-        valueFormatter: (p) => currencyFormatter(p.value),
+        valueFormatter: (p) =>
+          p.node && isFilterSubtotalNode(p.node) ? '' : currencyFormatter(p.value),
         cellStyle: (params) => subtotalCellStyle(params, true),
       },
       {
