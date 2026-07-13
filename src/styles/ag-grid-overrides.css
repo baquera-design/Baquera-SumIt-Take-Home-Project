@@ -107,10 +107,8 @@
   border-bottom: 1px solid #cbd5e1 !important;
 }
 
-.sumit-grid .ag-row-group-footer .ag-cell,
-.sumit-grid .ag-row-footer .ag-cell,
 .sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell {
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   font-size: 13px !important;
   color: #1f2937 !important;
   background-color: #eef2f6 !important;
@@ -119,8 +117,10 @@
 }
 
 .sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-wrapper {
-  font-weight: 500 !important;
+.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-wrapper,
+.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value.ag-right-aligned-cell,
+.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell[col-id='accountingAmount'] .ag-cell-value {
+  font-weight: 600 !important;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell-wrapper,
@@ -138,10 +138,25 @@
   letter-spacing: -0.01em;
 }
 
-.sumit-grid .ag-row-group-footer .ag-cell-value.ag-right-aligned-cell,
-.sumit-grid .ag-row-footer .ag-cell-value.ag-right-aligned-cell,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value.ag-right-aligned-cell {
+.sumit-grid .ag-row-group-footer .ag-cell,
+.sumit-grid .ag-row-footer .ag-cell {
   font-weight: 500 !important;
+  font-size: 13px !important;
+  color: #1f2937 !important;
+  background-color: #eef2f6 !important;
+  display: flex;
+  align-items: center;
+}
+
+.sumit-grid .ag-row-group-footer .ag-cell-value.ag-right-aligned-cell,
+.sumit-grid .ag-row-footer .ag-cell-value.ag-right-aligned-cell {
+  font-weight: 500 !important;
+  font-size: 13px;
+  color: #0f766e;
+}
+
+.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value.ag-right-aligned-cell {
+  font-weight: 600 !important;
   font-size: 13px;
   color: #0f766e;
 }
