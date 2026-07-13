@@ -226,7 +226,7 @@ export function RegisterSearch({
       const rect = searchBarRef.current.getBoundingClientRect()
       setTooltipPosition({
         left: rect.left,
-        top: rect.top - 10,
+        top: rect.bottom + 10,
         width: Math.min(Math.max(rect.width, 320), 576),
       })
     }
@@ -335,7 +335,7 @@ export function RegisterSearch({
     showStartHint && hintReady && tooltipPosition
       ? createPortal(
           <div
-            className="search-hint-tooltip-enter pointer-events-auto fixed z-[200] -translate-y-full"
+            className="search-hint-tooltip-enter pointer-events-auto fixed z-[200]"
             style={{
               left: tooltipPosition.left,
               top: tooltipPosition.top,
@@ -345,7 +345,7 @@ export function RegisterSearch({
             <div className="relative rounded-lg border border-primary/20 bg-primary px-4 py-3.5 text-white shadow-lg">
               <span
                 aria-hidden
-                className="absolute -bottom-1.5 left-7 h-3 w-3 rotate-45 border-r border-b border-primary/20 bg-primary"
+                className="absolute -top-1.5 left-7 h-3 w-3 rotate-45 border-t border-l border-primary/20 bg-primary"
               />
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 space-y-2">
