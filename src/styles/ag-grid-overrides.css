@@ -121,8 +121,8 @@
 .sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='credits'],
 .sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
   color: #0f766e !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
+  justify-content: flex-end !important;
+  text-align: right !important;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell-wrapper,
@@ -158,8 +158,7 @@
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell[col-id='accountingAmount'],
-.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'],
-.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
+.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'] {
   justify-content: flex-start !important;
 }
 

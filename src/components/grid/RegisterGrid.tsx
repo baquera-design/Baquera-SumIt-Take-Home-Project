@@ -41,8 +41,8 @@ function subtotalCellStyle(params: CellClassParams, numeric = false) {
   return {
     fontWeight: '600',
     color: numeric ? '#0f766e' : '#1f2937',
-    textAlign: 'left',
-    justifyContent: 'flex-start',
+    textAlign: 'right',
+    justifyContent: 'flex-end',
   }
 }
 
