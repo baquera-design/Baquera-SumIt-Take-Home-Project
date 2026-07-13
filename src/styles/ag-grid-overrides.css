@@ -3,6 +3,7 @@
 .sumit-grid {
   --ag-font-family: 'Inter', system-ui, sans-serif;
   --ag-font-size: 13px;
+  --ag-pinned-row-font-weight: 600;
   --ag-header-height: 36px;
   --ag-row-height: 32px;
   --ag-header-background-color: #f8f9fa;
@@ -101,13 +102,13 @@
 /* Subtotal footer — elevated visual hierarchy */
 .sumit-grid .ag-row-group-footer,
 .sumit-grid .ag-row-footer,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal {
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal {
   background-color: #eef2f6 !important;
   border-top: 2px solid #cbd5e1 !important;
   border-bottom: 1px solid #cbd5e1 !important;
 }
 
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell {
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell {
   font-weight: 600 !important;
   font-size: 13px !important;
   color: #1f2937 !important;
@@ -116,26 +117,18 @@
   align-items: center;
 }
 
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-wrapper,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value.ag-right-aligned-cell,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell[col-id='accountingAmount'] .ag-cell-value {
-  font-weight: 600 !important;
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='debits'],
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='credits'],
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
+  color: #0f766e !important;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell-wrapper,
 .sumit-grid .ag-row-footer .ag-cell-wrapper,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-wrapper {
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell-wrapper {
   display: flex;
   align-items: center;
   height: 100%;
-}
-
-.sumit-grid .ag-row-group-footer .ag-group-value,
-.sumit-grid .ag-row-footer .ag-group-value {
-  font-weight: 500;
-  color: #111827;
-  letter-spacing: -0.01em;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell,
@@ -148,6 +141,13 @@
   align-items: center;
 }
 
+.sumit-grid .ag-row-group-footer .ag-group-value,
+.sumit-grid .ag-row-footer .ag-group-value {
+  font-weight: 500;
+  color: #111827;
+  letter-spacing: -0.01em;
+}
+
 .sumit-grid .ag-row-group-footer .ag-cell-value.ag-right-aligned-cell,
 .sumit-grid .ag-row-footer .ag-cell-value.ag-right-aligned-cell {
   font-weight: 500 !important;
@@ -155,21 +155,14 @@
   color: #0f766e;
 }
 
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell-value.ag-right-aligned-cell {
-  font-weight: 600 !important;
-  font-size: 13px;
-  color: #0f766e;
-}
-
 .sumit-grid .ag-row-group-footer .ag-cell[col-id='accountingAmount'],
 .sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'],
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
+.sumit-grid .ag-row.ag-row-pinned.register-filter-subtotal .ag-cell[col-id='accountingAmount'] {
   justify-content: flex-start !important;
 }
 
 .sumit-grid .ag-row-group-footer .ag-cell[col-id='accountingAmount'] .ag-cell-value,
-.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'] .ag-cell-value,
-.sumit-grid .ag-row-pinned-bottom.register-filter-subtotal .ag-cell[col-id='accountingAmount'] .ag-cell-value {
+.sumit-grid .ag-row-footer .ag-cell[col-id='accountingAmount'] .ag-cell-value {
   text-align: left !important;
   width: 100%;
 }

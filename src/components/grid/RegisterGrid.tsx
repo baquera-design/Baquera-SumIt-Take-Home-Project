@@ -4,6 +4,7 @@ import {
   ModuleRegistry,
   AllCommunityModule,
   themeBalham,
+  type CellClassParams,
   type ColDef,
   type GridReadyEvent,
   type GetRowIdParams,
@@ -30,6 +31,17 @@ const currencyFormatter = (value: number | null | undefined) => {
 }
 
 const FILTER_SUBTOTAL_ROW_ID = '__filter-subtotal__'
+
+function isFilterSubtotalNode(node: IRowNode) {
+  return node.rowPinned === 'bottom' && node.data?.id === FILTER_SUBTOTAL_ROW_ID
+}
+
+function subtotalCellStyle(params: CellClassParams, numeric = false) {
+  if (!isFilterSubtotalNode(params.node)) return undefined
+  return numeric
+    ? { fontWeight: '600', color: '#0f766e' }
+    : { fontWeight: '600', color: '#1f2937' }
+}
 
 function buildFilterSubtotalRow(
   rows: RegisterTransaction[],
@@ -195,6 +207,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
         type: 'numericColumn',
         minWidth: 110,
         valueFormatter: (p) => currencyFormatter(p.value),
+        cellStyle: (params) => subtotalCellStyle(params, true),
       },
       {
         colId: 'credits',
@@ -205,6 +218,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
         type: 'numericColumn',
         minWidth: 110,
         valueFormatter: (p) => currencyFormatter(p.value),
+        cellStyle: (params) => subtotalCellStyle(params, true),
       },
       {
         colId: 'accountingAmount',
@@ -216,6 +230,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
         type: 'numericColumn',
         minWidth: 170,
         valueFormatter: (p) => currencyFormatter(p.value),
+        cellStyle: (params) => subtotalCellStyle(params, true),
       },
       {
         field: 'description',
@@ -263,6 +278,7 @@ export const RegisterGrid = forwardRef<RegisterGridHandle, RegisterGridProps>(
       resizable: true,
       filter: true,
       suppressHeaderMenuButton: false,
+      cellStyle: (params) => subtotalCellStyle(params),
     }),
     [],
   )
